@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediFlow</title>
+    <style>
+    :root {
+        --ink: #182620;
+        --paper: #FAF8F1;
+        --accent: #2F6B4F;
+        --accent-deep: #1E4A36;
+        --mint: #E3EBDF;
+        --line: #D9D2BF;
+        --white: #FFFFFF;
+        --card: #FFFFFF;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+        --ink: #EDEAE0; --paper: #12180F; --accent: #7FBE9C; --accent-deep: #A6D6BB;
+        --mint: #1C2A20; --line: #33402F; --white: #1A2118; --card: #182018;
+        }
+    }
+    :root[data-theme="dark"] {
+        --ink: #EDEAE0; --paper: #12180F; --accent: #7FBE9C; --accent-deep: #A6D6BB;
+        --mint: #1C2A20; --line: #33402F; --white: #1A2118; --card: #182018;
+    }
+    html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3 { font-family: 'Spectral', serif; font-weight: 500; margin: 0; }
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+    header.nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 32px; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 10px; font-family: 'Spectral', serif; font-size: 1.2rem; }
+    .brand-mark { width: 24px; height: 28px; flex-shrink: 0; }
+    .nav-links { display: flex; gap: 26px; font-size: 0.9rem; }
+    .nav-links a { text-decoration: none; opacity: 0.72; }
+    .nav-links a:hover { opacity: 1; }
+
+    /* HERO */
+    .hero { padding: 84px 32px 0; border-bottom: 1px solid var(--line); }
+    .hero-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 0.95fr; gap: 48px; align-items: center; }
+    .hero h1 { font-size: clamp(2.2rem, 4.2vw, 3.3rem); line-height: 1.1; letter-spacing: -0.01em; max-width: 13ch; }
+    .hero .sub { margin-top: 22px; font-size: 1.1rem; max-width: 42ch; opacity: 0.82; }
+    .hero-shot { border: 1px solid var(--line); border-radius: 10px 10px 0 0; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(24,38,32,0.35); }
+    .hero-shot img { width: 100%; }
+
+    /* MODULE ROWS */
+    .modules { padding: 88px 32px 20px; }
+    .modules > .wrap > .lead { max-width: 46ch; margin-bottom: 56px; }
+    .lead .eyebrow { font-size: 0.92rem; opacity: 0.65; }
+    .lead h2 { font-size: 1.85rem; margin-top: 10px; }
+    .mod-row { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 56px 0; border-top: 1px solid var(--line); }
+    .mod-row:last-child { border-bottom: 1px solid var(--line); }
+    .mod-row.reverse .mod-text { order: 2; }
+    .mod-row.reverse .mod-shot { order: 1; }
+    .mod-text h3 { font-size: 1.45rem; }
+    .mod-text p { margin: 14px 0 0; opacity: 0.82; max-width: 40ch; font-size: 0.98rem; }
+    .mod-shot { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+
+    /* WORKFLOW STRIP */
+    .flow { background: var(--mint); padding: 68px 32px; }
+    .flow .wrap h2 { font-size: 1.6rem; max-width: 30ch; margin-bottom: 36px; }
+    .flow-steps { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
+    .flow-steps > div { padding: 20px 18px 0 0; border-right: 1px solid var(--line); }
+    .flow-steps > div:last-child { border-right: none; padding-right: 0; }
+    .flow-steps h4 { font-family: 'Spectral', serif; font-weight: 500; font-size: 1rem; margin-bottom: 6px; }
+    .flow-steps p { font-size: 0.86rem; opacity: 0.75; margin: 0; }
+
+    .contact-footer { background: var(--white); color: var(--ink); padding: 56px clamp(24px, 4vw, 78px); }
+    .contact-footer-grid { max-width: 1760px; margin: 0 auto; display: grid; grid-template-columns: minmax(280px, 1.4fr) minmax(180px, 0.55fr) minmax(180px, 0.55fr); gap: clamp(48px, 9vw, 170px); }
+    .contact-brand h2 { font-family: 'IBM Plex Sans', sans-serif; font-size: 3rem; font-weight: 700; line-height: 1; margin-bottom: 28px; }
+    .contact-brand p { max-width: 42ch; margin: 0; font-size: 1.05rem; line-height: 1.4; }
+    .contact-links h3 { font-family: 'IBM Plex Sans', sans-serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 12px; }
+    .contact-links ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+    .contact-links li { font-size: 1.05rem; }
+
+    /* PRICING */
+    .pricing { padding: 92px 32px; border-bottom: 1px solid var(--line); }
+    .pricing .lead { max-width: 46ch; margin-bottom: 48px; }
+    .pricing .lead h2 { font-size: 1.85rem; margin-top: 10px; }
+    .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .plan { border: 1px solid var(--line); border-radius: 12px; padding: 32px; background: var(--card); }
+    .plan.featured { border-color: var(--accent); position: relative; }
+    .plan-tag { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-deep); opacity: 0.85; }
+    .plan h3 { font-size: 1.4rem; margin-top: 8px; }
+    .plan .price { font-family: 'Spectral', serif; font-size: 2.1rem; margin-top: 14px; }
+    .plan .price span { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.95rem; opacity: 0.6; font-weight: 400; }
+    .plan .desc { font-size: 0.9rem; opacity: 0.72; margin-top: 6px; }
+    .plan ul { list-style: none; padding: 0; margin: 24px 0 0; display: flex; flex-direction: column; gap: 12px; }
+    .plan li { font-size: 0.92rem; padding-left: 22px; position: relative; opacity: 0.88; }
+    .plan li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-deep); font-weight: 600; }
+    .plan-note { margin-top: 40px; font-size: 0.85rem; opacity: 0.6; max-width: 55ch; }
+
+    /* SECURITY */
+    .security { padding: 88px 32px; border-bottom: 1px solid var(--line); }
+    .sec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+    .sec-grid h2 { font-size: 1.6rem; max-width: 16ch; }
+    .sec-grid .points { display: flex; flex-direction: column; gap: 20px; }
+    .sec-grid .points div { font-size: 0.94rem; }
+    .sec-grid .points b { display: block; font-family: 'Spectral', serif; font-weight: 500; font-size: 1rem; margin-bottom: 4px; }
+
+    /* CTA */
+    .cta { padding: 92px 32px; }
+    .cta .wrap { display: flex; justify-content: space-between; align-items: end; gap: 40px; flex-wrap: wrap; }
+    .cta h2 { font-size: 1.9rem; max-width: 16ch; }
+    .cta-detail { font-size: 0.9rem; opacity: 0.68; max-width: 34ch; }
+
+    footer { border-top: 1px solid var(--line); padding: 24px 32px; font-size: 0.84rem; opacity: 0.62; display: flex; justify-content: space-between; }
+
+    @media (max-width: 760px) {
+        .hero-grid { grid-template-columns: 1fr; }
+        .hero { padding-top: 56px; }
+        .mod-row, .mod-row.reverse { grid-template-columns: 1fr; }
+        .mod-row.reverse .mod-text, .mod-row.reverse .mod-shot { order: initial; }
+        .flow-steps { grid-template-columns: 1fr 1fr; row-gap: 22px; }
+        .flow-steps > div { border-right: none; padding-right: 0; }
+        .plans { grid-template-columns: 1fr; }
+        .sec-grid { grid-template-columns: 1fr; }
+        .nav-links { display: none; }
+        .cta .wrap { flex-direction: column; align-items: start; }
+        .contact-footer-grid { grid-template-columns: 1fr 1fr; gap: 36px 28px; }
+        .contact-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 480px) {
+        .contact-footer-grid { grid-template-columns: 1fr; }
+        .contact-brand { grid-column: auto; }
+    }
+
+    .mod-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    }
+
+    .mod-images img {
+        width: 400px;
+        height: auto;
+        object-fit: contain;
+    }
+    </style>
+</head>
+<body>
+    <header class="nav">
+    <div class="brand">
+        <img src="./icon.png" alt="Logo MediFlow" style="width: 80px; height: 40px; object-fit: contain;">
+        <path d="M5 2C5 7 19 7 19 12C19 17 5 17 5 22C5 24 7 25 9 26M19 2C19 7 5 7 5 12C5 17 19 17 19 22C19 24 17 25 15 26" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        MediFlow
+    </div>
+    <nav class="nav-links">
+        <a href="#modules">Modules</a>
+        <a href="#tarifs">Tarifs</a>
+        <a href="#securite">Sécurité</a>
+    </nav>
+    </header>
+
+    <section class="hero">
+    <div class="hero-grid">
+        <div>
+        <h1>Le cabinet dentaire, organisé dans un seul logiciel.</h1>
+        <p class="sub">MediFlow réunit patients, rendez-vous, schéma dentaire et facturation dans une application de bureau pensée pour le rythme d'un cabinet — sans dépendre d'une connexion internet.</p>
+        </div>
+        <img src="./menu.png" alt="Inteface">
+    </div>
+    </section>
+
+    <section class="modules" id="modules">
+    <div class="wrap">
+        <div class="lead">
+        <div class="eyebrow">L'application</div>
+        <h2>Chaque geste du cabinet a sa place.</h2>
+        </div>
+
+        <div class="mod-row">
+        <div class="mod-text">
+            <h3>Patients & Dossiers</h3>
+            <p>Recherche instantanée par nom, téléphone ou email. Chaque dossier réunit informations, historique combiné des rendez-vous et paiements, traitements généraux et notes médicales éditables.</p>
+        </div>
+            <img src="./patients.png" alt="Patients Inteface">
+        </div>
+
+        <div class="mod-row reverse"> 
+    <div class="mod-text"> 
+        <h3>Schéma dentaire</h3> 
+        <p>
+            Odontogramme interactif dent par dent, formes anatomiques réalistes
+            selon le type de dent, bascule denture permanente/primaire, et suivi
+            du statut de chaque traitement : à traiter, en traitement, terminé.
+        </p>
+    </div> 
+        <div class="mod-images">
+            <img src="./charts.png" alt="Schéma dentaire" style="width: 400px; height: 360px; object-fit: contain;">
+            <img src="./colors.png" alt="Légende des statuts de traitement">
+        </div>
+    </div>
+
+        <div class="mod-row">
+        <div class="mod-text">
+            <h3>Rendez-vous</h3>
+            <p>Vue calendrier mensuelle liée directement aux dossiers patients, création en un clic avec motif et durée, changement de statut instantané.</p>
+        </div>
+            <img src="./RENDEZ vous.png" alt="rendez-vous" style="width: 400px; height: 360px; object-fit: contain;">
+        </div>
+
+        <div class="mod-row reverse">
+        <div class="mod-text">
+            <h3>Facturation</h3>
+            <p>Factures multi-lignes, paiements partiels ou complets calculés automatiquement, statut à jour en permanence/impayée, partielle ou payée.</p>
+        </div>
+            <img src="./facturation.png" alt="billing interface">
+        </div>
+
+        <div class="mod-row">
+        <div class="mod-text">
+            <h3>Finances</h3>
+            <p>Recettes, dépenses de cabinet catégorisées (prothésiste, matériel...) et net réel affiché en un coup d'œil, semaine par semaine.</p>
+        </div>
+            <img src="./finance.png" alt="finances interface">
+        </div>
+    </div>
+    </section>
+
+    <section class="flow">
+    <div class="wrap">
+        <h2>Un dossier suit le patient du premier rendez-vous à la facture réglée.</h2>
+        <div class="flow-steps">
+        <div><h4>Accueil</h4><p>Le patient est créé ou retrouvé en quelques caractères.</p></div>
+        <div><h4>Consultation</h4><p>Le praticien renseigne le schéma dentaire et les traitements généraux.</p></div>
+        <div><h4>Suivi</h4><p>Le rendez-vous suivant s'inscrit directement depuis le dossier.</p></div>
+        <div><h4>Règlement</h4><p>La facture reflète le statut réel; impayée, partielle ou payée.</p></div>
+        </div>
+    </div>
+    </section>
+
+    <section class="pricing" id="tarifs">
+    <div class="wrap">
+        <div class="lead">
+        <div class="eyebrow">Tarifs</div>
+        <h2>Une licence par cabinet, sans surprise.</h2>
+        </div>
+        <div class="plans">
+        <div class="plan">
+            <div class="plan-tag">Solo</div>
+            <h3>Praticien seul</h3>
+            <div class="price">2500 DA<span> / mois</span></div>
+            <p class="desc">Pour un cabinet à un seul praticien.</p>
+            <ul>
+            <li>Patients, dossiers & schéma dentaire illimités</li>
+            <li>Rendez-vous & facturation</li>
+            <li>Tableau de bord Finances</li>
+            <li>1 compte utilisateur</li>
+            <li>Mises à jour incluses</li>
+            </ul>
+        </div>
+        <div class="plan featured">
+            <div class="plan-tag">Cabinet</div>
+            <h3>Plusieurs praticiens</h3>
+            <div class="price">3000 DA<span> / mois</span></div>
+            <p class="desc">Pour un cabinet avec des remplaçants ou associés.</p>
+            <ul>
+            <li>Tout ce qui est inclus dans Solo</li>
+            <li>Comptes remplaçants illimités</li>
+            <li>Journal d'activité (traçabilité)</li>
+            <li>Gestion des utilisateurs</li>
+            <li>Support prioritaire</li>
+            </ul>
+        </div>
+        </div>
+        <p class="plan-note">Licence installée localement, données stockées sur l'ordinateur du cabinet.</p>
+    </div>
+    </section>
+
+    <section class="security" id="securite">
+    <div class="wrap sec-grid">
+        <h2>Pensée pour un cabinet à plusieurs mains.</h2>
+        <div class="points">
+        <div><b>Comptes distincts</b>Un compte docteur principal et des comptes remplaçants créés et gérés par l'administrateur.</div>
+        <div><b>Tranparence & traçabilité</b>Chaque action reste tracée et consultable par le docteur principal, pour un suivi transparent du cabinet.</div>
+        <div><b>Aide intégrée</b>Un guide d'utilisation accompagne chaque partie de l'application, accessible à tout moment.</div>
+        </div>
+    </div>
+    </section>
+
+    <section class="contact-footer">
+        <div class="contact-footer-grid">
+            <div class="flow-stepslt">
+                <h2>MediFlow.</h2>
+                <p>MediFlow simplifie la gestion de votre cabinet dentaire. Gérez vos patients, rendez-vous, dossiers et finances depuis une seule plateforme, pour un cabinet plus organisé, efficace et moderne.</p>
+            </div>
+            <div class="flow-stepslt">
+                <h3>RÉSEAUX SOCIAUX</h3>
+                <ul>
+                    <li>Instagram</li>
+                    <li>Tiktok</li>
+                    <li>email</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+    <span>MediFlow</span>
+    <span>Application de gestion pour cabinets dentaires</span>
+    </footer>
+    
+</body>
+</html>
