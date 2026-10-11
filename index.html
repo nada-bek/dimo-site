@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediFlow</title>
+    <title>MediFlow — Logiciel de gestion de cabinet dentaire</title>
+    <meta name="description" content="MediFlow réunit patients, rendez-vous, schéma dentaire et facturation dans une application de bureau qui fonctionne sans Internet. Offres Solo et Team.">
     <style>
     :root {
         --ink: #182620;
@@ -493,33 +494,54 @@
         border-bottom: 1px solid var(--line);
     }
 
-    .sec-grid {
+    .sec-lead {
+        max-width: 52ch;
+        margin-bottom: 46px;
+    }
+
+    .sec-lead .eyebrow {
+        font-size: 0.92rem;
+        opacity: 0.65;
+    }
+
+    .sec-lead h2 {
+        font-size: 1.85rem;
+        margin-top: 10px;
+    }
+
+    .sec-lead p {
+        margin: 14px 0 0;
+        opacity: 0.75;
+    }
+
+    .sec-cards {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 56px;
-    }
-
-    .sec-grid h2 {
-        font-size: 1.6rem;
-        max-width: 16ch;
-    }
-
-    .sec-grid .points {
-        display: flex;
-        flex-direction: column;
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
 
-    .sec-grid .points div {
-        font-size: 0.94rem;
+    .sec-card {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 24px;
+        background: var(--card);
     }
 
-    .sec-grid .points b {
-        display: block;
-        font-family: 'Spectral', serif;
-        font-weight: 500;
-        font-size: 1rem;
-        margin-bottom: 4px;
+    .sec-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .sec-card p {
+        margin: 10px 0 0;
+        font-size: 0.9rem;
+        opacity: 0.78;
+    }
+
+    .sec-note {
+        margin: 28px 0 0;
+        font-size: 0.85rem;
+        opacity: 0.6;
+        max-width: 60ch;
     }
 
     /* CTA */
@@ -691,7 +713,7 @@
             grid-template-columns: 1fr;
         }
 
-        .sec-grid {
+        .sec-cards {
             grid-template-columns: 1fr;
         }
 
@@ -1125,8 +1147,6 @@
 
 
             <div class="plans">
-
-
                 <!-- SOLO -->
                 <div class="plan">
 
@@ -1239,51 +1259,55 @@
     <!-- SECURITY -->
     <section class="security" id="securite">
 
-        <div class="wrap sec-grid">
-
-            <h2>
-                Pensée pour un cabinet à plusieurs mains.
-            </h2>
-
-            <div class="points">
-
-                <div>
-
-                    <b>
-                        Comptes distincts
-                    </b>
-
-                    Un compte docteur principal et des comptes remplaçants
-                    créés et gérés par l'administrateur.
-
+        <div class="wrap">
+            <div class="sec-lead">
+                <div class="eyebrow">
+                    Sécurité & données
                 </div>
-
-
-                <div>
-
-                    <b>
-                        Transparence & traçabilité
-                    </b>
-
-                    Chaque action reste tracée et consultable par le docteur
-                    principal, pour un suivi transparent du cabinet.
-
-                </div>
-
-
-                <div>
-
-                    <b>
-                        Aide intégrée
-                    </b>
-
-                    Un guide d'utilisation accompagne chaque partie de
-                    l'application, accessible à tout moment.
-
-                </div>
-
+                <h2>
+                    Vos données restent dans votre cabinet.
+                </h2>
+                <p>
+                    MediFlow est installé sur l'ordinateur du cabinet.
+                    Les dossiers de vos patients restent chez vous.
+                </p>
             </div>
+            <div class="sec-cards">
+                <div class="sec-card">
+                    <h3>Vos dossiers restent chez vous</h3>
+                    <p>
+                        Rien n'est envoyé sur Internet. Le logiciel fonctionne
+                        même sans connexion.
+                    </p>
+                </div>
 
+                <div class="sec-card">
+                    <h3>Pensée pour un cabinet à plusieurs mains</h3>
+                    <p>
+                        Un compte docteur principal et des comptes remplaçants 
+                        créés et gérés par l'administrateur avec un suivi transparent 
+                        du cabinet.
+                    </p>
+                </div>
+
+                
+                <div class="sec-card">
+                    <h3>Chacun son accès</h3>
+                    <p>
+                        Chaque personne du cabinet a son propre compte avec
+                        son mot de passe. Un mot de passe oublié se récupère
+                        facilement.
+                    </p>
+                </div>
+
+                <div class="sec-card">
+                    <h3>Aide intégrée</h3>
+                    <p>
+                        Un guide d'utilisation accompagne chaque partie de 
+                        l'application, accessible à tout moment.
+                    </p>
+                </div>
+            </div>
         </div>
 
     </section>
@@ -1374,12 +1398,15 @@
 
     <!-- FOOTER -->
     <footer>
+
         <span>
             MediFlow
         </span>
+
         <span>
             Application de gestion pour cabinets dentaires
         </span>
+
     </footer>
 
 </body>
